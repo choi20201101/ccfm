@@ -24,8 +24,16 @@ if not exist "node_modules" (
     echo.
 )
 
+:: Build web UI if not built
+if not exist "packages\web\dist\index.html" (
+    echo [INFO] Building web UI...
+    call pnpm --filter @ccfm/web build
+    echo.
+)
+
 :: Start server
 echo [INFO] Starting CCFM-Bot...
+echo [INFO] Web UI: http://127.0.0.1:18790/ui
 echo.
 call pnpm --filter @ccfm/core dev
 pause
