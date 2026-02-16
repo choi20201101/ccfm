@@ -2,13 +2,14 @@ import { NavLink } from "react-router-dom";
 import { useUiStore } from "@/stores/ui";
 
 const NAV_ITEMS = [
-  { path: "/", label: "Dashboard", icon: "grid" },
-  { path: "/tokens", label: "Tokens", icon: "coins" },
-  { path: "/channels", label: "Channels", icon: "radio" },
-  { path: "/providers", label: "Providers", icon: "cloud" },
-  { path: "/sessions", label: "Sessions", icon: "messages" },
-  { path: "/settings", label: "Settings", icon: "settings" },
-  { path: "/logs", label: "Logs", icon: "terminal" },
+  { path: "/chat", label: "Chat", icon: "Ch" },
+  { path: "/", label: "Dashboard", icon: "Da" },
+  { path: "/tokens", label: "Tokens", icon: "Tk" },
+  { path: "/channels", label: "Channels", icon: "Ch" },
+  { path: "/providers", label: "Providers", icon: "Pr" },
+  { path: "/sessions", label: "Sessions", icon: "Se" },
+  { path: "/settings", label: "Settings", icon: "St" },
+  { path: "/logs", label: "Logs", icon: "Lo" },
 ];
 
 export function Sidebar() {
@@ -30,7 +31,7 @@ export function Sidebar() {
           <NavLink
             key={item.path}
             to={item.path}
-            end={item.path === "/"}
+            end={item.path === "/" || item.path === "/chat"}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                 isActive
@@ -39,8 +40,8 @@ export function Sidebar() {
               }`
             }
           >
-            <span className="w-5 text-center text-xs uppercase tracking-wider text-gray-400">
-              {item.icon.slice(0, 2)}
+            <span className="flex h-6 w-6 items-center justify-center rounded bg-gray-100 text-[10px] font-bold text-gray-500">
+              {item.icon}
             </span>
             {item.label}
           </NavLink>

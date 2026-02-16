@@ -13,6 +13,26 @@ import { getLogger } from "../../logging/logger.js";
 
 const log = getLogger("gateway:api:setup");
 
+/**
+ * In-memory runtime setup state.
+ * Stored here so other modules (chat endpoint) can access it.
+ */
+export interface RuntimeSetup {
+  provider: string;
+  apiKey: string;
+  model: string;
+  systemPrompt: string;
+  personaName: string;
+  channel?: { type: string; token: string };
+}
+
+let runtimeSetup: RuntimeSetup | null = null;
+
+/** Get the current runtime setup, or null if not yet configured. */
+export function getRuntimeSetup(): RuntimeSetup | null {
+  return runtimeSetup;
+}
+
 /** Create the setup wizard Hono router. */
 export function createSetupRouter(): Hono {
   const router = new Hono();
@@ -59,12 +79,25 @@ export function createSetupRouter(): Hono {
         return c.json(response, 400);
       }
 
-      // Actual config writing is delegated to the config module.
+      // Store the setup in runtime memory for use by chat endpoint
+      runtimeSetup = {
+        provider: body.provider,
+        apiKey: body.apiKey,
+        model: body.model,
+        systemPrompt: body.persona?.systemPrompt ?? "You are a helpful AI assistant.",
+        personaName: body.persona?.name ?? "CCFM Bot",
+        channel: body.channel ?? undefined,
+      };
+
+      log.info(
+        { provider: body.provider, model: body.model, persona: runtimeSetup.personaName },
+        "Setup completed — runtime config stored",
+      );
+
       const response: ApiResponse = {
         success: true,
         data: { message: "Setup complete", provider: body.provider, model: body.model },
       };
-      log.info({ provider: body.provider, model: body.model }, "Setup completed");
       return c.json(response);
     } catch (err) {
       log.error({ err }, "Setup completion failed");

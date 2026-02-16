@@ -5,9 +5,10 @@ interface Props {
   onFinish: () => void;
   onPrev: () => void;
   loading: boolean;
+  error?: string | null;
 }
 
-export function ReviewStep({ data, onFinish, onPrev, loading }: Props) {
+export function ReviewStep({ data, onFinish, onPrev, loading, error }: Props) {
   return (
     <div>
       <h2 className="text-xl font-bold text-gray-900">Review & Finish</h2>
@@ -20,6 +21,12 @@ export function ReviewStep({ data, onFinish, onPrev, loading }: Props) {
         <Row label="Channel" value={data.channel ? `${data.channel.type} (configured)` : "None"} />
         <Row label="Bot Name" value={data.persona.name} />
       </div>
+
+      {error && (
+        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       <div className="mt-8 flex justify-between">
         <button onClick={onPrev} className="rounded-lg px-4 py-2 text-gray-600 hover:bg-gray-100">Back</button>

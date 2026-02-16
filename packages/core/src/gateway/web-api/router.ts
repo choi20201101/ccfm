@@ -8,6 +8,7 @@ import { Hono } from "hono";
 import type { ApiResponse } from "@ccfm/shared";
 import { getConfig } from "../../config/index.js";
 import { getLogger } from "../../logging/logger.js";
+import { createChatRouter } from "./chat.js";
 
 const log = getLogger("gateway:api:router");
 
@@ -109,6 +110,10 @@ export function createApiRouter(): Hono {
     };
     return c.json(response);
   });
+
+  // --- Mount chat sub-router ---
+  const chatRouter = createChatRouter();
+  router.route("/chat", chatRouter);
 
   log.debug("API v1 router initialized");
   return router;

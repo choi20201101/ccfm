@@ -38,10 +38,19 @@ export function SetupPage() {
   const prev = () => setStep((s) => Math.max(s - 1, 0));
   const update = (patch: Partial<SetupData>) => setData((d) => ({ ...d, ...patch }));
 
+  const [error, setError] = useState<string | null>(null);
+
   const finish = async () => {
-    await setupComplete.mutateAsync(data as unknown as Record<string, unknown>);
-    setSetupComplete(true);
-    navigate("/");
+    setError(null);
+    try {
+      await setupComplete.mutateAsync(data as unknown as Record<string, unknown>);
+      setSetupComplete(true);
+      navigate("/chat");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Setup failed. Please try again.";
+      setError(msg);
+      console.error("Setup completion failed:", err);
+    }
   };
 
   return (
@@ -69,7 +78,7 @@ export function SetupPage() {
         {step === 3 && <ModelStep data={data} onUpdate={update} onNext={next} onPrev={prev} />}
         {step === 4 && <ChannelStep data={data} onUpdate={update} onNext={next} onPrev={prev} />}
         {step === 5 && <PersonaStep data={data} onUpdate={update} onNext={next} onPrev={prev} />}
-        {step === 6 && <ReviewStep data={data} onFinish={finish} onPrev={prev} loading={setupComplete.isPending} />}
+        {step === 6 && <ReviewStep data={data} onFinish={finish} onPrev={prev} loading={setupComplete.isPending} error={error} />}
       </div>
     </div>
   );
