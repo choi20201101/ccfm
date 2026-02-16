@@ -53,8 +53,8 @@ export function createChatRouter(): Hono {
 
   log.debug("Initializing chat router");
 
-  // --- POST /chat/send ---
-  router.post("/chat/send", async (c) => {
+  // --- POST /send ---
+  router.post("/send", async (c) => {
     try {
       const body = await c.req.json();
       const message = body.message as string | undefined;
@@ -156,8 +156,8 @@ export function createChatRouter(): Hono {
     }
   });
 
-  // --- GET /chat/history ---
-  router.get("/chat/history", (c) => {
+  // --- GET /history ---
+  router.get("/history", (c) => {
     const sessionId = c.req.query("sessionId") ?? "default";
     const history = sessions.get(sessionId) ?? [];
 
@@ -174,8 +174,8 @@ export function createChatRouter(): Hono {
     return c.json(response);
   });
 
-  // --- POST /chat/reset ---
-  router.post("/chat/reset", async (c) => {
+  // --- POST /reset ---
+  router.post("/reset", async (c) => {
     const body = await c.req.json().catch(() => ({}));
     const sessionId = (body as Record<string, unknown>).sessionId as string ?? "default";
     sessions.delete(sessionId);

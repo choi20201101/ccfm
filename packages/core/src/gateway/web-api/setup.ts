@@ -39,8 +39,8 @@ export function createSetupRouter(): Hono {
 
   log.debug("Initializing setup wizard router");
 
-  // --- POST /setup/validate ---
-  router.post("/setup/validate", async (c) => {
+  // --- POST /validate ---
+  router.post("/validate", async (c) => {
     try {
       const body = (await c.req.json()) as SetupValidateRequest;
       log.info({ step: body.step }, "Validating setup step");
@@ -61,8 +61,8 @@ export function createSetupRouter(): Hono {
     }
   });
 
-  // --- POST /setup/complete ---
-  router.post("/setup/complete", async (c) => {
+  // --- POST /complete ---
+  router.post("/complete", async (c) => {
     try {
       const body = await c.req.json();
       log.info("Setup completion requested");

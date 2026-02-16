@@ -16,8 +16,8 @@ export function createTokensRouter(): Hono {
 
   log.debug("Initializing tokens API router");
 
-  // --- GET /tokens/usage ---
-  router.get("/tokens/usage", (c) => {
+  // --- GET /usage ---
+  router.get("/usage", (c) => {
     try {
       const raw = getTodayUsage();
 
@@ -71,8 +71,8 @@ export function createTokensRouter(): Hono {
     }
   });
 
-  // --- GET /tokens/budget ---
-  router.get("/tokens/budget", (c) => {
+  // --- GET /budget ---
+  router.get("/budget", (c) => {
     try {
       const raw = getMonthUsage();
       const currentSpend = raw.totalCost;
