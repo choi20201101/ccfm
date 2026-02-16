@@ -37,6 +37,22 @@ async function main(): Promise<void> {
   // 4. Discover implicit providers from environment variables
   discoverImplicitProviders();
 
+  // 4b. Inject env vars into plugin configs
+  const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
+  if (telegramToken) {
+    // Ensure plugins.entries exists
+    if (!config.plugins) (config as any).plugins = {};
+    if (!config.plugins!.entries) config.plugins!.entries = {};
+    if (!config.plugins!.entries["channel-telegram"]) {
+      config.plugins!.entries["channel-telegram"] = { enabled: true, config: {} };
+    }
+    config.plugins!.entries["channel-telegram"].config = {
+      ...config.plugins!.entries["channel-telegram"].config,
+      token: telegramToken,
+    };
+    log.info("Telegram bot token found in environment");
+  }
+
   // 5. Load plugins
   const pluginSearchPaths = config.plugins?.searchPaths ?? [
     resolve(resolveConfigDir(), "extensions"),

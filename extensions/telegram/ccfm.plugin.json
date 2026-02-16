@@ -1,0 +1,13 @@
+{
+  "id": "channel-telegram",
+  "name": "Telegram",
+  "version": "0.1.0",
+  "description": "Telegram Bot channel plugin for CCFM-Bot",
+  "main": "src/index.ts",
+  "type": "channel",
+  "channel": {
+    "id": "telegram",
+    "displayName": "Telegram",
+    "icon": "📱"
+  }
+}

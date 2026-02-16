@@ -1,0 +1,52 @@
+// CCFM-Bot Configuration
+// Edit this file or use the Web UI at http://localhost:18790/ui
+{
+  bot: {
+    name: "CCFM-Bot",
+    version: "0.1.0",
+  },
+
+  // LLM Provider settings
+  models: {
+    default: "claude-sonnet-4-20250514",
+    providers: {},  // Auto-discovered from env vars
+  },
+
+  // Gateway server
+  gateway: {
+    port: 18790,
+    host: "127.0.0.1",
+  },
+
+  // Channels
+  channels: {
+    telegram: {
+      enabled: true,
+    },
+  },
+
+  // Plugin settings
+  plugins: {
+    searchPaths: ["./extensions"],
+    entries: {
+      "channel-telegram": {
+        enabled: true,
+        config: {
+          // Token comes from TELEGRAM_BOT_TOKEN env var
+        },
+      },
+    },
+  },
+
+  // Token optimization
+  tokens: {
+    budget: {
+      // Default: system 5%, tools 10%, history 65%, response 15%, reserve 5%
+    },
+  },
+
+  // Logging
+  logging: {
+    level: "info",
+  },
+}
