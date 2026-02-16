@@ -25,7 +25,7 @@ export function SetupPage() {
   const [data, setData] = useState<SetupData>({
     provider: "anthropic",
     apiKey: "",
-    model: "claude-sonnet-4",
+    model: "claude-sonnet-4-20250514",
     channel: null,
     persona: { name: "CCFM Bot", systemPrompt: "You are a helpful AI assistant." },
   });

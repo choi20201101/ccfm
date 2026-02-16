@@ -2,9 +2,9 @@ import type { SetupData } from "../SetupPage";
 
 const MODELS: Record<string, Array<{ id: string; name: string; desc: string }>> = {
   anthropic: [
-    { id: "claude-sonnet-4", name: "Claude Sonnet 4", desc: "Best balance of speed and quality" },
-    { id: "claude-opus-4", name: "Claude Opus 4", desc: "Most capable, higher cost" },
-    { id: "claude-haiku-3.5", name: "Claude Haiku 3.5", desc: "Fastest, most affordable" },
+    { id: "claude-sonnet-4-20250514", name: "Claude Sonnet 4", desc: "Best balance of speed and quality" },
+    { id: "claude-opus-4-20250514", name: "Claude Opus 4", desc: "Most capable, higher cost" },
+    { id: "claude-3-5-haiku-20241022", name: "Claude 3.5 Haiku", desc: "Fastest, most affordable" },
   ],
   openai: [
     { id: "gpt-4o", name: "GPT-4o", desc: "Most capable OpenAI model" },
